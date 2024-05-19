@@ -1,10 +1,7 @@
 
 import streamlit as st
 from transformers import AutoTokenizer
-import os
 import replicate
-
-os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
 
 # Set assistant icon to Snowflake logo
 icons = {"assistant": "👁", "user": "⛷️"}
@@ -44,9 +41,7 @@ def generate_arctic_response(system_prompt: str, temperature = None, top_p = Non
     prompt.append("<|im_start|>assistant")
     prompt.append("")
     prompt_str = "\n".join(prompt)
-    print('=====================================')
-    print(prompt_str)
-    print('===================================')
+    
     if get_num_tokens(prompt_str) >= 3072:
         st.error("Conversation length too long. Please keep it under 3072 tokens.")
         st.button('Clear chat history', on_click=clear_chat_history, kwargs={"greeting": assistant_greeting}, key="clear_chat_history")
