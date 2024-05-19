@@ -3,16 +3,6 @@ import streamlit as st
 from transformers import AutoTokenizer
 import replicate
 
-# Set assistant icon to Snowflake logo
-icons = {"assistant": "👁", "user": "⛷️"}
-def display_messages(): 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"], avatar=icons[message["role"]]):
-            st.write(message["content"])
-
-def clear_chat_history(greeting: str | None = None):
-    greeting = greeting or "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."
-    st.session_state.messages = [{"role": "assistant", "content": greeting}]
 
 @st.cache_resource(show_spinner=False)
 def get_tokenizer():
@@ -28,7 +18,7 @@ def get_num_tokens(prompt):
     return len(tokens)
 
 
-def generate_arctic_response(system_prompt: str, temperature = None, top_p = None, assistant_greeting = None, history: list[dict] = None):
+def generate_arctic_response(system_prompt: str, temperature = None, top_p = None, history: list[dict] = None):
     temperature = temperature or 0.01
     top_p = top_p or 0.9
     history = history or st.session_state.messages
@@ -44,7 +34,6 @@ def generate_arctic_response(system_prompt: str, temperature = None, top_p = Non
     
     if get_num_tokens(prompt_str) >= 3072:
         st.error("Conversation length too long. Please keep it under 3072 tokens.")
-        st.button('Clear chat history', on_click=clear_chat_history, kwargs={"greeting": assistant_greeting}, key="clear_chat_history")
         st.stop()
 
 
