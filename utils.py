@@ -1,8 +1,7 @@
 
 import streamlit as st
 from transformers import AutoTokenizer
-import replicate
-
+from replicate.client import Client
 
 @st.cache_resource(show_spinner=False)
 def get_tokenizer():
@@ -46,5 +45,6 @@ def generate_arctic_response(system_prompt: str, temperature = None, top_p = Non
     }
     snowflake_model = "snowflake/snowflake-arctic-instruct"
 
-    for event in replicate.stream(snowflake_model, input=input):
+    client = Client(api_token=st.session_state['REPLICATE_API_TOKEN'])
+    for event in client.stream(snowflake_model, input=input):
         yield str(event)

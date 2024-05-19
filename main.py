@@ -1,6 +1,5 @@
 import streamlit as st
 from essay_scoring_tab import render_essay_scoring_tab
-import os
 
 
 # Replicate Credentials
@@ -14,7 +13,7 @@ with st.sidebar:
             st.markdown("**Don't have an API token?** Head over to [Replicate](https://replicate.com) to sign up for one.")
 
 
-    os.environ['REPLICATE_API_TOKEN'] = replicate_api_token
+    st.session_state['REPLICATE_API_TOKEN'] = replicate_api_token
 
 st.header("Learn Mentor", divider="rainbow")
 st.markdown("Accessible Assistants Using Snowflake's **Arctic** LLM")
