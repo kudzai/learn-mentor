@@ -174,25 +174,25 @@ def get_student_input(session_name: str):
 
 
 if __name__ == "__main__":
-    app_sidebar(lambda : st.button(
-                'Clear chat history', 
-                on_click=clear_chat_history, 
-                kwargs={"session_name": session_name}, 
-                key="clear_premortem_chat_history"
-            ))
+   app_sidebar(lambda : st.button(
+               'Clear chat history', 
+               on_click=clear_chat_history, 
+               kwargs={"session_name": session_name}, 
+               key="clear_premortem_chat_history"
+         ))
 
-    introduction()
+   introduction()
 
-    initialise_session(session_name)
+   if not have_valid_session_token():
+      show_warning_to_provide_api_token()
+      st.stop()
 
-    if have_valid_session_token():
+   initialise_session(session_name)
 
-      show_all_session_chat_messages(session_name)
+   show_all_session_chat_messages(session_name)
 
-      greet_and_self_introduce(session_name)
-      
-      generate_response_from_coach(session_name)
-               
-      get_student_input(session_name)
-    else:
-        show_warning_to_provide_api_token()
+   greet_and_self_introduce(session_name)
+   
+   generate_response_from_coach(session_name)
+            
+   get_student_input(session_name)
