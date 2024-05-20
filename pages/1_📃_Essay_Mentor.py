@@ -9,6 +9,7 @@ from chat_history import (
     show_all_session_chat_messages, 
     write_message_and_add_to_history
 )
+from app_sidebar import app_sidebar
 
 session_name = 'grading_messages'
 
@@ -136,21 +137,18 @@ def show_results_and_append_to_history(results: dict):
 
     st.session_state[session_name]["messages"].append({"role": "assistant", "content": message})
 
-def render_essay_scoring_tab():
-    initialise_session(session_name)
-
-
-    with st.sidebar:
-            st.button(
+if __name__ == "__main__":
+    app_sidebar(lambda : st.button(
                 'Clear chat history', 
                 on_click=clear_chat_history, 
                 kwargs={"session_name": session_name}, 
-                key="clear_chat_history"
-            )
+                key="clear_essay_chat_history"
+            ))
+    initialise_session(session_name)            
 
 
     description = """
-**LearnMentor** provides detailed and constructive feedback on your essay, helping you improve your writing skills. The app evaluates 
+**Learn Mentor** provides detailed and constructive feedback on your essay, helping you improve your writing skills. The app evaluates 
 different dimensions of writing quality, offering insights and suggestions for enhancement.
 """
     st.markdown(description)

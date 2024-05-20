@@ -20,7 +20,7 @@ def get_num_tokens(prompt):
 def generate_arctic_response(system_prompt: str, temperature = None, top_p = None, history: list[dict] = None):
     temperature = temperature or 0.01
     top_p = top_p or 0.9
-    history = history or st.session_state.messages
+    history = history or []
 
     prompt = [f'''<|im_start|>system\n{system_prompt}<|im_end|>''']
     for dict_message in history:

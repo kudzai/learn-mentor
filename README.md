@@ -14,6 +14,6 @@ Welcome to LearnMentor, a versatile Streamlit app powered by Snowflake's advance
 
 ## Why LearnMentor?
 
-LearnMentor aims to empower learners by leveraging Snowflake-Arctic's capabilities to provide meaningful and ethical AI-driven support. Whether you're a student seeking to enhance your writing, a teacher looking for innovative ways to support your students, or an educational institution aiming to incorporate advanced AI tools, LearnMentor is designed to meet your needs with reliability and integrity.
+Learn Mentor aims to empower learners by leveraging Snowflake-Arctic's capabilities to provide meaningful and ethical AI-driven support. Whether you're a student seeking to enhance your writing, a teacher looking for innovative ways to support your students, or an educational institution aiming to incorporate advanced AI tools, LearnMentor is designed to meet your needs with reliability and integrity.
 
 Start your journey towards improved learning and teaching with LearnMentor today!
