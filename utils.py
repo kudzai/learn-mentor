@@ -3,6 +3,15 @@ import streamlit as st
 from transformers import AutoTokenizer
 from replicate.client import Client
 
+def is_valid_token(token):
+    return (token.startswith('r8_') and len(token)==40)
+
+def have_valid_session_token():
+    return 'REPLICATE_API_TOKEN' in st.session_state and is_valid_token(st.session_state['REPLICATE_API_TOKEN'])
+
+def show_warning_to_provide_api_token():
+    st.write(":warning: :red[**Please provide a token for Replicate API.**]")
+
 @st.cache_resource(show_spinner=False)
 def get_tokenizer():
     """Get a tokenizer to make sure we're not sending too much text

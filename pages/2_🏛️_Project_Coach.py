@@ -1,6 +1,15 @@
 import streamlit as st
-from utils import generate_arctic_response
-from chat_history import initialise_session, icons, show_all_session_chat_messages, clear_chat_history
+from utils import (
+      generate_arctic_response, 
+      have_valid_session_token, 
+      show_warning_to_provide_api_token
+    )
+from chat_history import (
+      initialise_session, 
+      icons, 
+      show_all_session_chat_messages, 
+      clear_chat_history
+    )
 from app_sidebar import app_sidebar
 
 
@@ -119,8 +128,8 @@ Throughout the process, ensure you wait for the student to respond to each quest
 
 
 def introduction():
-    st.title("Project Premortem Coach")
     text = """
+    ### Project Premortem Coach
 A pre-mortem, or premortem, is a managerial strategy in which a project team imagines that a project or organization has failed, 
 and then works backward to determine what potentially could lead to the failure of the project or organization (Source: [Wikipedia](https://en.wikipedia.org/wiki/Pre-mortem)).
 
@@ -176,10 +185,14 @@ if __name__ == "__main__":
 
     initialise_session(session_name)
 
-    show_all_session_chat_messages(session_name)
+    if have_valid_session_token():
 
-    greet_and_self_introduce(session_name)
-   
-    generate_response_from_coach(session_name)
-              
-    get_student_input(session_name)
+      show_all_session_chat_messages(session_name)
+
+      greet_and_self_introduce(session_name)
+      
+      generate_response_from_coach(session_name)
+               
+      get_student_input(session_name)
+    else:
+        show_warning_to_provide_api_token()

@@ -1,10 +1,6 @@
 import streamlit as st
 from typing import Callable, Optional
-
-
-def is_valid_token(token):
-    return (token.startswith('r8_') and len(token)==40)
-
+from utils import is_valid_token
 
 def initialise_replicate_auth_token():
     if 'REPLICATE_API_TOKEN' in st.session_state and is_valid_token(st.session_state['REPLICATE_API_TOKEN']):

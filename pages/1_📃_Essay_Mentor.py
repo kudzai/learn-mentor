@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import generate_arctic_response
+from utils import generate_arctic_response, have_valid_session_token, show_warning_to_provide_api_token
 import json
 from trait_definitions import traits
 from chat_history import (
@@ -137,6 +137,32 @@ def show_results_and_append_to_history(results: dict):
 
     st.session_state[session_name]["messages"].append({"role": "assistant", "content": message})
 
+def grade_the_essay_on_all_traits(essay: str, session_name: str):
+        essay_grades = []
+        write_message_and_add_to_history(essay, "user", session_name)
+        with st.spinner():
+            for trait, trait_details in traits.items():
+                write_message_and_add_to_history(f"Assessing Essay on **{trait}**", "assistant", session_name)
+                grade = score_essay_on_trait(essay, trait, trait_details["description"], trait_details["prompt_template"])
+
+                show_results_and_append_to_history(grade)
+                essay_grades.append(grade)
+
+
+        write_message_and_add_to_history("Overall Assessment", "assistant", session_name)
+        results = aggregate_feedback(essay_grades)
+        show_results_and_append_to_history(results)
+
+def introduction():        
+    description = """
+### Learn Mentor
+The essay mentor provides detailed and constructive feedback on your essay, helping you improve your writing skills. The app evaluates 
+different dimensions of writing quality, offering insights and suggestions for enhancement. The feedback and suggestions are more important
+and have higher significance than the grade.
+"""
+    st.markdown(description)
+
+
 if __name__ == "__main__":
     app_sidebar(lambda : st.button(
                 'Clear chat history', 
@@ -144,37 +170,21 @@ if __name__ == "__main__":
                 kwargs={"session_name": session_name}, 
                 key="clear_essay_chat_history"
             ))
-    initialise_session(session_name)            
+    initialise_session(session_name)    
 
-
-    description = """
-**Learn Mentor** provides detailed and constructive feedback on your essay, helping you improve your writing skills. The app evaluates 
-different dimensions of writing quality, offering insights and suggestions for enhancement.
-"""
-    st.markdown(description)
-
+    introduction()
 
     essay = st.text_area("Essay (enter your essay for feedback):", placeholder="Enter your essay here ...", height=300)
 
+    if not have_valid_session_token():
+        show_warning_to_provide_api_token()
+        st.stop()
 
     if st.button("Rate my essay"): 
         st.session_state[session_name] = {"messages": [], "essay_rated": True}
 
-        essay_grades = []
         if essay:
-            write_message_and_add_to_history(essay, "user", session_name)
-            with st.spinner():
-                for trait, trait_details in traits.items():
-                    write_message_and_add_to_history(f"Assessing Essay on **{trait}**", "assistant", session_name)
-                    grade = score_essay_on_trait(essay, trait, trait_details["description"], trait_details["prompt_template"])
-
-                    show_results_and_append_to_history(grade)
-                    essay_grades.append(grade)
-    
-
-            write_message_and_add_to_history("Overall Assessment", "assistant", session_name)
-            results = aggregate_feedback(essay_grades)
-            show_results_and_append_to_history(results)
+            grade_the_essay_on_all_traits(essay=essay, session_name=session_name)
         else:
             st.write("Please enter your essay.")
     else:
