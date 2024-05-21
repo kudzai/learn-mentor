@@ -17,3 +17,9 @@ Welcome to LearnMentor, a versatile Streamlit app powered by Snowflake's advance
 Learn Mentor aims to empower learners by leveraging Snowflake-Arctic's capabilities to provide meaningful and ethical AI-driven support. Whether you're a student seeking to enhance your writing, a teacher looking for innovative ways to support your students, or an educational institution aiming to incorporate advanced AI tools, LearnMentor is designed to meet your needs with reliability and integrity.
 
 Start your journey towards improved learning and teaching with LearnMentor today!
+
+
+## Learning Resources
+- [UK Gov Curriculum](https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study)
+- [Open source books](https://openstax.org/subjects/math)
+- [Wiki varsity](https://en.wikiversity.org/wiki/Basic_Laws_of_Algebra)

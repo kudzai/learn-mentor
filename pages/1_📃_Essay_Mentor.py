@@ -155,7 +155,7 @@ def grade_the_essay_on_all_traits(essay: str, session_name: str):
 
 def introduction():        
     description = """
-### Learn Mentor
+### Essay Mentor
 The essay mentor provides detailed and constructive feedback on your essay, helping you improve your writing skills. The app evaluates 
 different dimensions of writing quality, offering insights and suggestions for enhancement. The feedback and suggestions are more important
 and have higher significance than the grade.
